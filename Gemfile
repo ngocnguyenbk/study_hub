@@ -16,9 +16,11 @@ gem "thruster", require: false
 
 gem "graphql"
 gem "graphiql-rails", group: :development
+gem "devise"
+gem "devise-jwt"
 
 group :development, :test do
-  gem "pry-rails", require: false
+  gem "pry"
   gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
 end
