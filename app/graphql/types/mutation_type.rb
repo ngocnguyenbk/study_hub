@@ -2,6 +2,7 @@
 
 module Types
   class MutationType < Types::BaseObject
+    field :update_group, mutation: Mutations::UpdateGroup
     field :join_group, mutation: Mutations::JoinGroup
     field :create_group, mutation: Mutations::CreateGroup
     field :login_user, mutation: Mutations::LoginUser

@@ -8,7 +8,7 @@ module Resolvers
     def resolve(limit:)
       authenticate_user!
 
-      current_user.owned_groups.limit(limit).preload(:members)
+      current_user.owned_groups.limit(limit).preload(:memberships)
     end
   end
 end
