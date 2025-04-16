@@ -29,3 +29,6 @@
 
 en:
   hello: "Hello world"
+  graphql:
+    errors:
+      unauthenticated: "Unauthenticated"
