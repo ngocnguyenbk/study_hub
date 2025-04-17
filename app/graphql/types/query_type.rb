@@ -9,5 +9,6 @@ module Types
 
     field :group, resolver: Resolvers::GroupResolver
     field :owned_groups, resolver: Resolvers::GroupsResolver
+    field :joined_groups, resolver: Resolvers::JoinedGroupsResolver
   end
 end
