@@ -2,6 +2,7 @@
 
 module Types
   class MutationType < Types::BaseObject
+    field :update_post, mutation: Mutations::UpdatePost
     field :approve_member, mutation: Mutations::ApproveMember
     field :create_post, mutation: Mutations::CreatePost
     field :update_group, mutation: Mutations::UpdateGroup
