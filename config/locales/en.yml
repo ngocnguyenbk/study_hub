@@ -8,3 +8,4 @@ en:
       group_already_joined: "Group already joined"
       group_already_requested: "Group already requested"
       group_already_rejected: "Group already rejected"
+      membership_not_found: "Membership not found"
