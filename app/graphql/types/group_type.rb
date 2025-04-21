@@ -12,9 +12,9 @@ module Types
     field :max_members, Integer
     field :memberships_count, Integer, null: false
     field :status, Types::GroupStatusType, null: false
-    field :pending_users, [ Types::UserType ], null: false
-    field :accepted_users, [ Types::UserType ], null: false
-    field :rejected_users, [ Types::UserType ], null: false
+    field :pending_members, [ Types::UserType ], null: false
+    field :accepted_members, [ Types::UserType ], null: false
+    field :rejected_members, [ Types::UserType ], null: false
     field :memberships, [ Types::MembershipType ], null: false
   end
 end
