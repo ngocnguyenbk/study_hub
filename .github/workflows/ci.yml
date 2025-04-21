@@ -36,4 +36,33 @@ jobs:
 
       - name: Lint code for consistent style
         run: bin/rubocop -f github
+  rspec:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Set up MySQL
+        uses: ankane/setup-mysql@v1
+        with:
+          mysql-version: '8.0'
+          database: study_hub_test
+
+      - name: Start MySQL service and prepare database
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bin/rails db:create db:schema:load
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Run tests
+        run: |
+          bundle exec rails db:migrate RAILS_ENV=test
+          bundle exec rspec spec

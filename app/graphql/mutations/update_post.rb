@@ -2,13 +2,15 @@
 
 module Mutations
   class UpdatePost < BaseMutation
-    argument :id, ID, required: true
-    argument :title, String, required: false
-    argument :content, String, required: false
-    argument :status, String, required: false
+    description "Update an existing post"
 
-    field :post, Types::PostType, null: true
-    field :errors, [ String ], null: false
+    argument :content, String, required: false, description: "Content of the post"
+    argument :id, ID, required: true, description: "ID of the post to update"
+    argument :status, String, required: false, description: "Status of the post (e.g., draft, published)"
+    argument :title, String, required: false, description: "Title of the post"
+
+    field :errors, [ String ], null: false, description: "List of errors if any"
+    field :post, Types::PostType, null: true, description: "The updated post object"
 
     def resolve(id:, **args)
       user = authenticate_user!

@@ -6,7 +6,15 @@ input ApproveMemberInput {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+
+  """
+  ID of the group
+  """
   groupId: ID!
+
+  """
+  ID of the user to approve
+  """
   userId: ID!
 }
 
@@ -18,7 +26,15 @@ type ApproveMemberPayload {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+
+  """
+  List of errors if any
+  """
   errors: [String!]!
+
+  """
+  The approved membership object
+  """
   membership: Membership
 }
 
@@ -30,7 +46,15 @@ input CreateGroupInput {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+
+  """
+  Description of the group
+  """
   description: String
+
+  """
+  Name of the group
+  """
   name: String!
 }
 
@@ -42,7 +66,15 @@ type CreateGroupPayload {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+
+  """
+  List of errors if any
+  """
   errors: [String!]!
+
+  """
+  The created group object
+  """
   group: Group
 }
 
@@ -54,8 +86,20 @@ input CreatePostInput {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+
+  """
+  Content of the post
+  """
   content: String!
+
+  """
+  ID of the group where the post will be created
+  """
   groupId: ID!
+
+  """
+  Title of the post
+  """
   title: String!
 }
 
@@ -67,24 +111,90 @@ type CreatePostPayload {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+
+  """
+  List of errors if any
+  """
   errors: [String!]!
+
+  """
+  The created post object
+  """
   post: Post
 }
 
+"""
+A group of users
+"""
 type Group {
-  acceptedUsers: [User!]!
+  """
+  List of accepted members
+  """
+  acceptedMembers: [User!]!
+
+  """
+  Creation date of the group
+  """
   createdAt: ISO8601DateTime!
+
+  """
+  Description of the group
+  """
   description: String
+
+  """
+  ID of the group
+  """
   id: ID!
-  maxMembers: Int
+
+  """
+  Maximum number of members in the group
+  """
+  maxMembers: Int!
+
+  """
+  List of memberships in the group
+  """
   memberships: [Membership!]!
+
+  """
+  Number of memberships in the group
+  """
   membershipsCount: Int!
-  name: String
+
+  """
+  Name of the group
+  """
+  name: String!
+
+  """
+  Owner of the group
+  """
   owner: User!
-  ownerId: Int
-  pendingUsers: [User!]!
-  rejectedUsers: [User!]!
+
+  """
+  ID of the owner
+  """
+  ownerId: Int!
+
+  """
+  List of pending members
+  """
+  pendingMembers: [User!]!
+
+  """
+  List of rejected members
+  """
+  rejectedMembers: [User!]!
+
+  """
+  Status of the group
+  """
   status: GroupStatus!
+
+  """
+  Last update date of the group
+  """
   updatedAt: ISO8601DateTime!
 }
 
@@ -116,6 +226,10 @@ input JoinGroupInput {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+
+  """
+  ID of the group to join
+  """
   groupId: ID!
 }
 
@@ -127,7 +241,15 @@ type JoinGroupPayload {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+
+  """
+  List of errors if any
+  """
   errors: [String!]!
+
+  """
+  The group object
+  """
   group: Group
 }
 
@@ -139,7 +261,15 @@ input LoginUserInput {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+
+  """
+  Email of the user
+  """
   email: String!
+
+  """
+  Password of the user
+  """
   password: String!
 }
 
@@ -151,65 +281,165 @@ type LoginUserPayload {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+
+  """
+  List of errors if any
+  """
   errors: [String!]!
+
+  """
+  JWT token for the user
+  """
   token: String
+
+  """
+  The logged-in user object
+  """
   user: User
 }
 
+"""
+A membership in a group
+"""
 type Membership {
+  """
+  Creation date of the membership
+  """
   createdAt: ISO8601DateTime!
+
+  """
+  ID of the group
+  """
   groupId: Int!
+
+  """
+  ID of the membership
+  """
   id: ID!
+
+  """
+  Date when the user joined the group
+  """
   joinedAt: ISO8601DateTime
+
+  """
+  Reason for the membership status
+  """
   reason: String
-  status: String!
+
+  """
+  Status of the membership
+  """
+  status: MembershipStatus!
+
+  """
+  Last update date of the membership
+  """
   updatedAt: ISO8601DateTime!
+
+  """
+  ID of the user
+  """
   userId: Int!
 }
 
+"""
+Membership status enum
+"""
+enum MembershipStatus {
+  """
+  The membership is accepted
+  """
+  ACCEPTED
+
+  """
+  The membership is pending
+  """
+  PENDING
+
+  """
+  The membership is rejected
+  """
+  REJECTED
+}
+
+"""
+Mutation root
+"""
 type Mutation {
+  """
+  Approve a member's request to join a group
+  """
   approveMember(
     """
     Parameters for ApproveMember
     """
     input: ApproveMemberInput!
   ): ApproveMemberPayload
+
+  """
+  Create a new group
+  """
   createGroup(
     """
     Parameters for CreateGroup
     """
     input: CreateGroupInput!
   ): CreateGroupPayload
+
+  """
+  Create a new post in a group
+  """
   createPost(
     """
     Parameters for CreatePost
     """
     input: CreatePostInput!
   ): CreatePostPayload
+
+  """
+  Join a group
+  """
   joinGroup(
     """
     Parameters for JoinGroup
     """
     input: JoinGroupInput!
   ): JoinGroupPayload
+
+  """
+  Login a user
+  """
   loginUser(
     """
     Parameters for LoginUser
     """
     input: LoginUserInput!
   ): LoginUserPayload
+
+  """
+  Register a new user
+  """
   registerUser(
     """
     Parameters for RegisterUser
     """
     input: RegisterUserInput!
   ): RegisterUserPayload
+
+  """
+  Update an existing group
+  """
   updateGroup(
     """
     Parameters for UpdateGroup
     """
     input: UpdateGroupInput!
   ): UpdateGroupPayload
+
+  """
+  Update an existing post in a group
+  """
   updatePost(
     """
     Parameters for UpdatePost
@@ -218,29 +448,124 @@ type Mutation {
   ): UpdatePostPayload
 }
 
+"""
+Post type
+"""
 type Post {
+  """
+  Content of the post
+  """
   content: String!
+
+  """
+  Creation date of the post
+  """
   createdAt: ISO8601DateTime!
+
+  """
+  ID of the group
+  """
   groupId: Int!
+
+  """
+  ID of the post
+  """
   id: ID!
+
+  """
+  Publication date of the post
+  """
   publishedAt: ISO8601DateTime
-  status: String!
+
+  """
+  Status of the post
+  """
+  status: PostStatus!
+
+  """
+  Title of the post
+  """
   title: String!
+
+  """
+  Last update date of the post
+  """
   updatedAt: ISO8601DateTime!
+
+  """
+  ID of the user
+  """
   userId: Int!
 }
 
+"""
+Post status enum
+"""
+enum PostStatus {
+  """
+  The post is archived
+  """
+  ARCHIVED
+
+  """
+  The post is a draft
+  """
+  DRAFT
+
+  """
+  The post is published
+  """
+  PUBLISHED
+}
+
+"""
+Query root
+"""
 type Query {
   """
-  Find a group by ID
+  Get a group by ID
   """
-  group(id: ID!): Group
+  group(
+    """
+    ID of the group
+    """
+    id: ID!
+  ): Group
+
+  """
+  Get groups joined by the current user
+  """
+  joinedGroups(
+    """
+    Limit the number of groups returned
+    """
+    limit: Int = 10
+  ): [Group!]!
+
+  """
+  Get the current user
+  """
   me: User
 
   """
-  Get list of groups
+  Get groups owned by the current user
   """
-  ownedGroups(limit: Int = 10): [Group!]!
+  ownedGroups(
+    """
+    Limit the number of groups returned
+    """
+    limit: Int = 10
+  ): [Group!]!
+
+  """
+  Get a post by ID
+  """
+  post(
+    """
+    ID of the post
+    """
+    id: ID!
+  ): Post
 }
 
 """
@@ -251,8 +576,20 @@ input RegisterUserInput {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+
+  """
+  Email of the user
+  """
   email: String!
+
+  """
+  Password of the user
+  """
   password: String!
+
+  """
+  Password confirmation of the user
+  """
   passwordConfirmation: String!
 }
 
@@ -264,7 +601,15 @@ type RegisterUserPayload {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+
+  """
+  List of errors if any
+  """
   errors: [String!]!
+
+  """
+  The registered user object
+  """
   user: User
 }
 
@@ -276,10 +621,30 @@ input UpdateGroupInput {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+
+  """
+  Description of the group
+  """
   description: String
+
+  """
+  ID of the group to update
+  """
   id: ID!
+
+  """
+  Maximum number of members in the group
+  """
   maxMembers: Int
+
+  """
+  Name of the group
+  """
   name: String
+
+  """
+  Status of the group (e.g., public, private)
+  """
   status: String
 }
 
@@ -291,8 +656,20 @@ type UpdateGroupPayload {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+
+  """
+  List of errors if any
+  """
   errors: [String!]!
+
+  """
+  The updated group object
+  """
   group: Group
+
+  """
+  Indicates if the update was successful
+  """
   success: Boolean!
 }
 
@@ -304,9 +681,25 @@ input UpdatePostInput {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+
+  """
+  Content of the post
+  """
   content: String
+
+  """
+  ID of the post to update
+  """
   id: ID!
+
+  """
+  Status of the post (e.g., draft, published)
+  """
   status: String
+
+  """
+  Title of the post
+  """
   title: String
 }
 
@@ -318,11 +711,29 @@ type UpdatePostPayload {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
+
+  """
+  List of errors if any
+  """
   errors: [String!]!
+
+  """
+  The updated post object
+  """
   post: Post
 }
 
+"""
+User type
+"""
 type User {
+  """
+  Email of the user
+  """
   email: String!
+
+  """
+  ID of the user
+  """
   id: ID!
 }

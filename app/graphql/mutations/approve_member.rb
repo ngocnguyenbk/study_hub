@@ -2,11 +2,13 @@
 
 module Mutations
   class ApproveMember < BaseMutation
-    argument :group_id, ID, required: true
-    argument :user_id, ID, required: true
+    description "Approve a pending member to join a group"
 
-    field :membership, Types::MembershipType, null: true
-    field :errors, [ String ], null: false
+    argument :group_id, ID, required: true, description: "ID of the group"
+    argument :user_id, ID, required: true, description: "ID of the user to approve"
+
+    field :errors, [ String ], null: false, description: "List of errors if any"
+    field :membership, Types::MembershipType, null: true, description: "The approved membership object"
 
     def resolve(group_id:, user_id:)
       user = authenticate_user!

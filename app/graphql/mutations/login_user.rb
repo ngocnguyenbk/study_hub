@@ -2,12 +2,14 @@
 
 module Mutations
   class LoginUser < BaseMutation
-    argument :email, String, required: true
-    argument :password, String, required: true
+    description "Log in a user and return a JWT token"
 
-    field :user, Types::UserType, null: true
-    field :token, String, null: true
-    field :errors, [ String ], null: false
+    argument :email, String, required: true, description: "Email of the user"
+    argument :password, String, required: true, description: "Password of the user"
+
+    field :errors, [ String ], null: false, description: "List of errors if any"
+    field :token, String, null: true, description: "JWT token for the user"
+    field :user, Types::UserType, null: true, description: "The logged-in user object"
 
     def resolve(email:, password:)
       user = User.find_for_authentication(email: email)

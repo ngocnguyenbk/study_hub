@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Types
-  class PostStatusType < Types::BaseObject
+  class PostStatusType < Types::BaseEnum
     description "Post status enum"
 
     value "DRAFT", "The post is a draft", value: "draft"
