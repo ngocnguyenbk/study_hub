@@ -43,6 +43,6 @@ class StudyHubSchema < GraphQL::Schema
     GlobalID.find(global_id)
   end
 
-  max_complexity 200
-  max_depth 10
+  max_complexity 220
+  max_depth 15
 end
