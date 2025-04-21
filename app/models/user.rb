@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
 
   has_many :owned_groups, class_name: "Group", foreign_key: "owner_id"
 
+  has_many :posts
   has_many :memberships
   has_many :groups, -> { where(memberships: { status: Membership.statuses[:accepted] }) }, through: :memberships
   has_many :pending_groups, -> { where(memberships: { status: Membership.statuses[:pending] }) }, through: :memberships, source: :group

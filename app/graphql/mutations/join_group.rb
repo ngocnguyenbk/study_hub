@@ -2,10 +2,12 @@
 
 module Mutations
   class JoinGroup < BaseMutation
-    argument :group_id, ID, required: true
+    description "Join a group"
 
-    field :group, Types::GroupType, null: true
-    field :errors, [ String ], null: false
+    argument :group_id, ID, required: true, description: "ID of the group to join"
+
+    field :errors, [ String ], null: false, description: "List of errors if any"
+    field :group, Types::GroupType, null: true, description: "The group object"
 
     def resolve(group_id:)
       user = authenticate_user!

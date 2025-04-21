@@ -42,4 +42,7 @@ class StudyHubSchema < GraphQL::Schema
     # For example, use Rails' GlobalID library (https://github.com/rails/globalid):
     GlobalID.find(global_id)
   end
+
+  max_complexity 200
+  max_depth 10
 end

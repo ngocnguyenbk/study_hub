@@ -2,11 +2,13 @@
 
 module Mutations
   class CreateGroup < BaseMutation
-    argument :name, String, required: true
-    argument :description, String, required: false
+    description "Create a new group"
 
-    field :group, Types::GroupType, null: true
-    field :errors, [ String ], null: false
+    argument :description, String, required: false, description: "Description of the group"
+    argument :name, String, required: true, description: "Name of the group"
+
+    field :errors, [ String ], null: false, description: "List of errors if any"
+    field :group, Types::GroupType, null: true, description: "The created group object"
 
     def resolve(name:, description: nil)
       user = authenticate_user!

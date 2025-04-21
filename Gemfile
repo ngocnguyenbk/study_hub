@@ -23,5 +23,13 @@ group :development, :test do
   gem "pry"
   gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
+  gem "rubocop-rspec", require: false
+  gem "rubocop-graphql", require: false
   gem "graphql-docs", require: false
+  gem "rspec-rails"
+end
+
+group :test do
+  gem "factory_bot_rails"
+  gem "shoulda-matchers"
 end

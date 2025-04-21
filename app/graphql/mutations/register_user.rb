@@ -2,12 +2,14 @@
 
 module Mutations
   class RegisterUser < BaseMutation
-    argument :email, String, required: true
-    argument :password, String, required: true
-    argument :password_confirmation, String, required: true
+    description "Register a new user"
 
-    field :user, Types::UserType, null: true
-    field :errors, [ String ], null: false
+    argument :email, String, required: true, description: "Email of the user"
+    argument :password, String, required: true, description: "Password of the user"
+    argument :password_confirmation, String, required: true, description: "Password confirmation of the user"
+
+    field :errors, [ String ], null: false, description: "List of errors if any"
+    field :user, Types::UserType, null: true, description: "The registered user object"
 
     def resolve(email:, password:, password_confirmation:)
       user = User.new(

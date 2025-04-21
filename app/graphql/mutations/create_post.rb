@@ -2,12 +2,14 @@
 
 module Mutations
   class CreatePost < BaseMutation
-    argument :group_id, ID, required: true
-    argument :title, String, required: true
-    argument :content, String, required: true
+    description "Create a new post in a group"
 
-    field :post, Types::PostType, null: true
-    field :errors, [ String ], null: false
+    argument :content, String, required: true, description: "Content of the post"
+    argument :group_id, ID, required: true, description: "ID of the group where the post will be created"
+    argument :title, String, required: true, description: "Title of the post"
+
+    field :errors, [ String ], null: false, description: "List of errors if any"
+    field :post, Types::PostType, null: true, description: "The created post object"
 
     def resolve(group_id:, title:, content:)
       user = authenticate_user!
