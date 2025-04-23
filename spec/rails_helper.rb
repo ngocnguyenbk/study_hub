@@ -1,3 +1,11 @@
+require 'simplecov'
+SimpleCov.start do
+  add_group 'Models', 'app/models'
+  add_group 'Mutations', 'app/graphql/mutations'
+  add_group 'Resolvers', 'app/graphql/resolvers'
+  add_group 'Types', 'app/graphql/types'
+end
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'

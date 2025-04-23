@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Post Query', type: :request do
+RSpec.describe Resolvers::PostResolver, type: :request do
   describe 'post query' do
     let(:user) { create(:user) }
     let(:headers) { auth_headers_for(user) }

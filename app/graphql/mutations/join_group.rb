@@ -15,9 +15,9 @@ module Mutations
 
       return error_response(:group_not_found) if group.nil?
       return error_response(:group_yourself) if group.owner == user
-      return error_response(:group_already_requested) if group.pending_users.include?(user)
-      return error_response(:group_already_joined) if group.accepted_users.include?(user)
-      return error_response(:group_already_rejected) if group.rejected_users.include?(user)
+      return error_response(:group_already_requested) if group.pending_members.include?(user)
+      return error_response(:group_already_joined) if group.accepted_members.include?(user)
+      return error_response(:group_already_rejected) if group.rejected_members.include?(user)
 
       user.groups << group
 

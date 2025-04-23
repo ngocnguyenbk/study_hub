@@ -20,9 +20,11 @@ module Mutations
 
       attributes = args.slice(:title, :content, :status).compact
 
-      if post.update(attributes)
-        post.update(published_at: Time.current) if post.published? && post.published_at.nil?
+      if attributes[:status] == "published" && post.published_at.nil?
+        attributes[:published_at] = Time.current
+      end
 
+      if post.update(attributes)
         { post: post, errors: [] }
       else
         { post: nil, errors: post.errors.full_messages }
