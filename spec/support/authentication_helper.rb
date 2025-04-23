@@ -1,5 +1,6 @@
 module AuthenticationHelper
-  def generate_jwt_token(user)
-    Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first
+  def auth_headers_for(user)
+    token = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first
+    { 'Authorization' => "Bearer #{token}" }
   end
 end
