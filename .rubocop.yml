@@ -24,3 +24,5 @@ GraphQL/ExtractType:
   Enabled: false
 RSpec/ExampleLength:
   Max: 10
+RSpec/MultipleExpectations:
+  Max: 3
